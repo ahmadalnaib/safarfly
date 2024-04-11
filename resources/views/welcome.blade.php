@@ -11,8 +11,8 @@
         <h2 class="w-full mx-auto text-4xl font-extrabold leading-none text-left text-red-600 sm:text-5xl md:text-7xl md:text-center"> سفرفاي  </h2>
         <p class="w-full max-w-4xl mx-auto text-xl text-right text-gray-600 md:text-2xl md:text-center">خطط لرحلتك المستدامة في ثوانٍ معدودة</p>
 
-        <form action="" method="post">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <form action="{{ route('search') }}" method="post">
+          @csrf
         <div class="flex flex-col w-full mx-auto space-y-5 md:space-y-0 md:space-x-5 md:flex-row">
           <input type="text" id="address" name="address" class="flex-1 w-full px-5 py-5 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl  border border-gray-300 rounded-lg focus:ring-4 focus:border-red-700 focus:ring-red-600 focus:ring-opacity-50 focus:outline-none bg-gray-100 ml-5" data-primary="blue-600" data-rounded="rounded-lg" placeholder="الى ين">
   

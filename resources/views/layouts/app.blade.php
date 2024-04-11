@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased" style="overflow: hidden">
         <div class="min-h-screen bg-white">
             @include('layouts.navigation')
 
@@ -34,3 +34,4 @@
         </div>
     </body>
 </html>
+
