@@ -12,6 +12,13 @@ class DestinationController extends Controller
 {
     public function search(Request $request)
     {
+
+        $validated = $request->validate([
+            'address' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'categories' => 'required|exists:categories,id',
+        ]);
         // Get the address and date from the request
         $apiKey = env('GOOGLE_MAPS_API_KEY');
         $address = $request->input('address');
