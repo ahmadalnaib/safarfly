@@ -12,7 +12,7 @@
 
       <!-- Result -->
       <div class="h-screen overflow-y-scroll bg-white shadow overflow-hidden sm:rounded-lg p-6">
-          <h1 class="text-2xl font-bold mb-4">اقتراحات الرحلات المستدامة</h1>
+          <h1 class="text-2xl font-bold mb-4">اقتراحات الرحلات </h1>
           @php
           // Split the result into lines
           $lines = explode("\n", $result);
@@ -25,7 +25,7 @@
       @endforeach
 
       @if (!empty($hotels))
-    <h2>   :الفنادق القريبة من وجهتك</h2>
+    <h2>   :الاماكن القريبة من وجهتك</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach ($hotels as $hotel)
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">

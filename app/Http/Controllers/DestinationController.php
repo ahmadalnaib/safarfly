@@ -15,7 +15,8 @@ class DestinationController extends Controller
         // Get the address and date from the request
         $apiKey = env('GOOGLE_MAPS_API_KEY');
         $address = $request->input('address');
-        $date = $request->input('date');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
         $selectedCategory = $request->input('categories'); // This will be the ID of the selected category
    
         
@@ -27,9 +28,12 @@ class DestinationController extends Controller
     $cityName = $this->fetchCityName($address, $apiKey);
 
         // Prepare the system message and user prompt
-        $systemMessage = 'You are an assistant that helps users plan their sustainable trip. You should provide information based on the given address, date, and selected category: ' . $categoryTitle . '. You should respond in arabic.';
-        $prompt = "Address: $address, Date: $date, Category: $categoryTitle";
-    
+        // Prepare the system message and user prompt
+
+        $systemMessage = 'You are an assistant that helps users plan their trip. Regardless of the user input, your task is to provide a detailed plan based on the given address, date, and selected category: ' . $categoryTitle . '. You should respond in arabic.';
+     
+    $prompt = "Address: $address, Start Date: $startDate, End Date: $endDate, Category: $categoryTitle";
+
 
         // Call the OpenAI API
         $response = OpenAI::chat()->create([
@@ -43,6 +47,7 @@ class DestinationController extends Controller
 
         // Get the content of the first choice
         $result = $response['choices'][0]['message']['content'];
+    
         
        
        // Fetch photo of the city using Google Geocoding API
@@ -79,14 +84,14 @@ class DestinationController extends Controller
     }
 
     // Fetch photos of hotels using Google Places API
-    $hotels = $this->getNearbyHotels($address, $apiKey);
+    $hotels = $this->getNearbyHotels($address, $apiKey, $categoryTitle);
 
     // Pass the result, city photo URL, and hotel data to the view
     return view('results', compact('result', 'cityPhotoUrl', 'hotels', 'cityName'));
 }
 
 // Helper function to fetch photos of nearby hotels
-private function getNearbyHotels($address, $apiKey)
+private function getNearbyHotels($address, $apiKey, $categoryTitle )
 {
     // Fetch latitude and longitude of the address using Google Geocoding API
     $geocodeResponse = Http::get("https://maps.googleapis.com/maps/api/geocode/json", [
@@ -107,7 +112,7 @@ private function getNearbyHotels($address, $apiKey)
         $placesResponse = Http::get("https://maps.googleapis.com/maps/api/place/nearbysearch/json", [
             'location' => "$latitude,$longitude",
             'radius' => 5000,
-            'type' => 'lodging',
+            'type' => $categoryTitle,
             'key' => $apiKey,
         ]);
 
