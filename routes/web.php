@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DestinationController;
 
 /*
@@ -20,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::post('/search', [DestinationController::class, 'search'])->name('search');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

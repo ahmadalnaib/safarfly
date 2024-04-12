@@ -1,6 +1,15 @@
 <x-app-layout>
      
-
+  <style>
+    /* Style for the checkbox label */
+    .checkbox-label {
+        cursor: pointer;
+    }
+    /* Style for the checked checkbox label */
+    input[type="checkbox"]:checked + .checkbox-label {
+        background-color: #6b7280; /* Change the color as desired */
+    }
+</style>
 
 <section class="py-20 bg-white tails-selected-element" >
 
@@ -22,6 +31,16 @@
       
           <button type="submit" class="flex-shrink-0 px-10 py-5 text-2xl font-medium text-center text-white bg-red-600 rounded-lg focus:ring-4 focus:ring-red-600 focus:ring-opacity-50 focus:ring-offset-2 focus:outline-none">انطلق</button>
         </div>
+
+
+        <div class="container mx-auto max-w-2xl mt-10">
+          <div class="category mt-1">
+            <ul class="flex flex-wrap justify-center">
+            @include('includes.category_list')
+            </ul>
+          </div>
+      
+      </div>
       </form>
       
   
@@ -29,55 +48,6 @@
   
   </div></section>
   
-  <div class="container mx-auto max-w-2xl  mt-10">
-    <div class="category mt-1">
-        <ul class="flex flex-wrap justify-center">
-        {{-- @foreach ($categories as $category) --}}
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1"> الثقافة</a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">جولة في المدينة</a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">الطبيعة</a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">مغامرات</a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">الفخامة</a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">الصحة </a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1"> الحياة الليلية</a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">التعليمية </a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">الطبخ </a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">روحانية </a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">الاسترخاء </a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">عائلية </a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">التسوق </a>
-          </li>
-          <li class="py-2 mx-2 my-1 w-full sm:w-full md:w-auto flex justify-center flex-col text-center">
-            <a href="}" class="bg-red-600 hover:bg-gray-100 text-white py-2 px-4  rounded-md m-1">لاستجمام </a>
-          </li>
-        {{-- @endforeach --}}
-      </ul>
-    </div>
-  </div>
+
 
 </x-app-layout>
