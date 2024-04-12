@@ -33,17 +33,52 @@ class DestinationController extends Controller
         // Get the content of the first choice
         $result = $response['choices'][0]['message']['content'];
         
-        // Call the Google Maps Geocoding API
-        $geocodingResponse = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
-            'address' => $address,
-            'key' => env('GOOGLE_MAPS_API_KEY'),
-        ]);
-
-        // Get the coordinates of the address
-       dd($geocodingResponse);
-
-        // Pass the result to a view
-        return view('results', ['result' => $result, 'coordinates' => $coordinates]);
-    }
+          // Call the Google Maps Geocoding API
+          $apiKey = env('GOOGLE_MAPS_API_KEY');
+          $geocodeResponse = Http::get("https://maps.googleapis.com/maps/api/geocode/json", [
+              'address' => $address,
+              'key' => $apiKey,
+          ]);
   
-}
+          // Extract necessary information from the response
+          $geocodeData = $geocodeResponse->json();
+          $photoUrl = null;
+          $hotels = [];
+  
+          // Check if there are results and get the latitude and longitude
+          if (isset($geocodeData['results']) && count($geocodeData['results']) > 0) {
+              $latitude = $geocodeData['results'][0]['geometry']['location']['lat'];
+              $longitude = $geocodeData['results'][0]['geometry']['location']['lng'];
+  
+              // Call the Google Places API to search for hotels
+              $placesResponse = Http::get("https://maps.googleapis.com/maps/api/place/nearbysearch/json", [
+                  'location' => "$latitude,$longitude",
+                  'radius' => 5000,
+                  'type' => 'lodging',
+                  'key' => $apiKey,
+              ]);
+  
+              // Extract hotel information from the response
+              $placesData = $placesResponse->json();
+              if (isset($placesData['results']) && count($placesData['results']) > 0) {
+                  foreach ($placesData['results'] as $hotel) {
+                      $hotels[] = [
+                          'name' => $hotel['name'],
+                          'rating' => isset($hotel['rating']) ? $hotel['rating'] : 'N/A',
+                          'address' => $hotel['vicinity'],
+                          'photoUrl' => isset($hotel['photos']) ? $this->getPhotoUrl($hotel['photos'][0]['photo_reference'], $apiKey) : null,
+                      ];
+                  }
+              }
+          }
+  
+          // Pass the result, photo URL, and hotel data to the view
+          return view('results', compact('result', 'photoUrl', 'hotels'));
+      }
+  
+      // Helper function to get photo URL
+      private function getPhotoUrl($photoReference, $apiKey)
+      {
+          return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoReference&key=$apiKey";
+      }
+  }
